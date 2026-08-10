@@ -5,6 +5,13 @@ using ModuleA;
 using ModuleB;
 using ECommerce;
 using CSharpLearning;
+<<<<<<< HEAD
+=======
+using Bank;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+>>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, cohort!");
 
@@ -352,6 +359,574 @@ SchoolManagement.Student.display();
 
 //resolved ambuguity error 
 
+<<<<<<< HEAD
+=======
+//encapsulation
+BankAccount account = new BankAccount();
+
+account.Deposit(1000m);
+account.Withdraw(300m);
+account.Withdraw(1000m);
+account.Deposit(-200m);
+
+Console.WriteLine($"Current Balance: {account.GetBalance()}");
+
+account.PrintHistory();
+
+//inheritance 
+Console.WriteLine("----- Car -----");
+Car car = new Car("Toyota", "Corolla", 2024, 4);
+car.DisplayInfo();
+
+Console.WriteLine();
+
+Console.WriteLine("----- Bike -----");
+Bike bike = new Bike("Royal Enfield", "Classic 350", 2023, false);
+bike.DisplayInfo();
+
+Console.WriteLine();
+
+Console.WriteLine("----- Electric Car -----");
+ElectricCar tesla = new ElectricCar(
+    "Tesla",
+    "Model 3",
+    2025,
+    4,
+    75
+);
+tesla.DisplayInfo();
+
+//sealed override 
+//Notification email = new EmailNotification();
+//Notification sms = new SmsNotification();
+////Notification push = new PushNotification();
+
+//email.Send();
+//sms.Send();
+////push.Send();
+
+//abstraction 
+Circle circle = new Circle(5);
+Rectangle rectangle = new Rectangle(10, 4);
+
+circle.DisplayArea();
+rectangle.DisplayArea();
+
+// Uncomment to observe the compile error
+//Shape shape = new Shape();
+
+//Interfaces 
+RectangleInterface rect = new RectangleInterface(10, 5);
+
+Console.WriteLine($"Area: {rect.CalculateArea()}");
+Console.WriteLine($"Perimeter: {rect.CalculatePerimeter()}");
+
+rect.Draw();
+
+//overloading and hiding method 
+Console.WriteLine("----- Method Overloading -----");
+
+Calculator calculator = new Calculator();
+
+Console.WriteLine(calculator.Add(10, 20));
+Console.WriteLine(calculator.Add(10.5, 20.5));
+Console.WriteLine(calculator.Add(1, 2, 3));
+Console.WriteLine(calculator.Add(1, 2, 3, 4, 5));
+
+Console.WriteLine();
+
+Console.WriteLine("----- Runtime Polymorphism -----");
+
+List<Shape> shapes = new List<Shape>
+{
+    new Circle(5),
+    new Rectangle(10, 4)
+};
+
+foreach (Shape z in shapes)
+{
+    z.DisplayArea();
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Method Hiding (new) -----");
+
+Logger logger = new Logger();
+logger.Log();
+
+FileLogger fileLogger = new FileLogger();
+fileLogger.Log();
+
+Logger baseReference = new FileLogger();
+baseReference.Log();
+
+//operator overloading 
+Money usd1 = new Money(100, "USD");
+Money usd2 = new Money(200, "USD");
+Money usd3 = new Money(100, "USD");
+Money inr = new Money(5000, "INR");
+
+// + operator
+Money total = usd1 + usd2;
+Console.WriteLine(total);
+
+// == and !=
+Console.WriteLine(usd1 == usd3);
+Console.WriteLine(usd1 != usd2);
+
+// > and <
+Console.WriteLine(usd2 > usd1);
+Console.WriteLine(usd1 < usd2);
+
+// Currency mismatch
+try
+{
+    Money invalid = usd1 + inr;
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+
+//delegate 
+Console.WriteLine("----- Delegate -----");
+
+// Single delegate
+MathOperation operation = MathOperations.Add;
+operation(10, 5);
+
+operation = MathOperations.Subtract;
+operation(10, 5);
+
+operation = MathOperations.Multiply;
+operation(10, 5);
+
+operation = MathOperations.Divide;
+operation(10, 5);
+
+Console.WriteLine();
+
+Console.WriteLine("----- Multicast Delegate -----");
+
+MathOperation multi = MathOperations.Add;
+multi += MathOperations.Multiply;
+
+multi(10, 5);
+
+Console.WriteLine();
+
+Console.WriteLine("----- Func Delegate -----");
+
+Func<double, double, double> funcOperation = MathOperations.Add;
+funcOperation(10, 5);
+
+funcOperation = MathOperations.Multiply;
+funcOperation(10, 5);
+
+//event
+Console.WriteLine("----- Events -----");
+
+AlarmClock clock = new AlarmClock();
+Person person = new Person();
+CoffeeMachine coffeeMachine = new CoffeeMachine();
+
+clock.OnAlarmRing += person.WakeUp;
+clock.OnAlarmRing += coffeeMachine.StartBrewing;
+
+clock.RingAlarm();
+
+//task 2.1
+Console.WriteLine("----- Action -----");
+
+Action<string> action = DelegateProcessor.PrintUpperCase;
+action("hello world");
+
+Console.WriteLine();
+
+Console.WriteLine("----- Func -----");
+
+Func<int, int, int> multiply = DelegateProcessor.Multiply;
+Console.WriteLine(multiply(5, 6));
+
+Console.WriteLine();
+
+Console.WriteLine("----- Predicate -----");
+
+Predicate<int> isEven = DelegateProcessor.IsEven;
+Console.WriteLine(isEven(10));
+Console.WriteLine(isEven(7));
+
+Console.WriteLine();
+
+Console.WriteLine("----- ProcessList -----");
+
+List<int> numb = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+DelegateProcessor.ProcessList(
+    numb,
+    isEven,
+    x => x * x,
+    x => Console.WriteLine(x)
+);
+//2.11
+Console.WriteLine("----- Generic Repository: Student -----");
+
+Repository<StudentGeneric> studentRepo = new Repository<StudentGeneric>();
+
+studentRepo.Add(new StudentGeneric("Ranjith", 23));
+studentRepo.Add(new StudentGeneric("Arun", 24));
+
+foreach (var student in studentRepo.GetAll())
+{
+    Console.WriteLine(student);
+}
+
+studentRepo.Update(0, new StudentGeneric("Ranjith Kumar", 24));
+
+Console.WriteLine();
+Console.WriteLine("After Update:");
+
+foreach (var student in studentRepo.GetAll())
+{
+    Console.WriteLine(student);
+}
+
+Console.WriteLine();
+Console.WriteLine("----- Generic Repository: Product -----");
+
+Repository<ProductGeneric> productRepo = new Repository<ProductGeneric>();
+
+productRepo.Add(new ProductGeneric("Laptop", 65000));
+productRepo.Add(new ProductGeneric("Mouse", 800));
+
+foreach (var product in productRepo.GetAll())
+{
+    Console.WriteLine(product);
+}
+
+productRepo.Delete(productRepo.GetAll()[1]);
+
+Console.WriteLine();
+Console.WriteLine("After Delete:");
+
+foreach (var product in productRepo.GetAll())
+{
+    Console.WriteLine(product);
+}
+
+//2.12
+Console.WriteLine("----- Even Numbers -----");
+
+foreach (int numbe in NumberGenerator.GetEvenNumbers(10))
+{
+    Console.WriteLine(numbe);
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Books (Alphabetical) -----");
+
+BookCollection library = new BookCollection();
+
+library.Add(new Book("C# in Depth", "Jon Skeet"));
+library.Add(new Book("Clean Code", "Robert C. Martin"));
+library.Add(new Book("Algorithms", "Robert Sedgewick"));
+
+foreach (Book book in library)
+{
+    Console.WriteLine(book);
+}
+List<EmployeeLinq> employees = new List<EmployeeLinq>
+{
+    new EmployeeLinq("Ranjith", "IT", 60000, new DateTime(2022, 1, 10)),
+    new EmployeeLinq("Arun", "IT", 55000, new DateTime(2021, 5, 15)),
+    new EmployeeLinq("Priya", "HR", 45000, new DateTime(2020, 3, 20)),
+    new EmployeeLinq("Meena", "Finance", 70000, new DateTime(2019, 7, 1)),
+    new EmployeeLinq("Karthik", "Finance", 52000, new DateTime(2023, 2, 11)),
+    new EmployeeLinq("Vijay", "Sales", 48000, new DateTime(2021, 9, 18)),
+    new EmployeeLinq("Suresh", "Sales", 65000, new DateTime(2018, 11, 30)),
+    new EmployeeLinq("Anita", "HR", 53000, new DateTime(2022, 6, 5)),
+    new EmployeeLinq("Divya", "IT", 80000, new DateTime(2017, 4, 25)),
+    new EmployeeLinq("Rahul", "Marketing", 51000, new DateTime(2023, 1, 12))
+};
+
+Console.WriteLine("----- Salary > 50000 (Query Syntax) -----");
+var highSalaryQuery =
+    from e in employees
+    where e.Salary > 50000
+    select e;
+
+foreach (var e in highSalaryQuery)
+{
+    Console.WriteLine($"{e.Name} - {e.Salary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Salary > 50000 (Method Syntax) -----");
+var highSalaryMethod = employees.Where(e => e.Salary > 50000);
+
+foreach (var e in highSalaryMethod)
+{
+    Console.WriteLine($"{e.Name} - {e.Salary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Order By Salary Desc (Query Syntax) -----");
+var orderQuery =
+    from e in employees
+    orderby e.Salary descending
+    select e;
+
+foreach (var e in orderQuery)
+{
+    Console.WriteLine($"{e.Name} - {e.Salary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Order By Salary Desc (Method Syntax) -----");
+var orderMethod = employees.OrderByDescending(e => e.Salary);
+
+foreach (var e in orderMethod)
+{
+    Console.WriteLine($"{e.Name} - {e.Salary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Group By Department (Query Syntax) -----");
+var groupQuery =
+    from e in employees
+    group e by e.Department into dept
+    select new
+    {
+        Department = dept.Key,
+        Count = dept.Count(),
+        AverageSalary = dept.Average(x => x.Salary)
+    };
+
+foreach (var d in groupQuery)
+{
+    Console.WriteLine($"{d.Department} - Count: {d.Count}, Avg Salary: {d.AverageSalary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Group By Department (Method Syntax) -----");
+var groupMethod = employees
+    .GroupBy(e => e.Department)
+    .Select(dept => new
+    {
+        Department = dept.Key,
+        Count = dept.Count(),
+        AverageSalary = dept.Average(x => x.Salary)
+    });
+
+foreach (var d in groupMethod)
+{
+    Console.WriteLine($"{d.Department} - Count: {d.Count}, Avg Salary: {d.AverageSalary}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Anonymous Type Projection (Query Syntax) -----");
+var projectionQuery =
+    from e in employees
+    select new
+    {
+        e.Name,
+        Experience = DateTime.Now.Year - e.JoiningDate.Year
+    };
+
+foreach (var p1 in projectionQuery)
+{
+    Console.WriteLine($"{p1.Name} - {p1.Experience} years");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Anonymous Type Projection (Method Syntax) -----");
+var projectionMethod = employees.Select(e => new
+{
+    e.Name,
+    Experience = DateTime.Now.Year - e.JoiningDate.Year
+});
+
+foreach (var p1 in projectionMethod)
+{
+    Console.WriteLine($"{p1.Name} - {p1.Experience} years");
+}
+
+//2.14
+Console.WriteLine("----- Extension Methods -----");
+
+// ToTitleCase
+string sampleText = "hello world from c sharp";
+Console.WriteLine(sampleText.ToTitleCase());
+
+// IsNullOrEmpty
+List<int> listNumbers = new List<int>();
+Console.WriteLine(listNumbers.IsNullOrEmpty());
+
+listNumbers.Add(10);
+Console.WriteLine(listNumbers.IsNullOrEmpty());
+
+// ToWords
+Console.WriteLine(0.ToWords());
+Console.WriteLine(25.ToWords());
+Console.WriteLine(105.ToWords());
+Console.WriteLine(999.ToWords());
+
+Console.WriteLine();
+
+Console.WriteLine("----- Anonymous Types -----");
+
+List<EmployeeSimple> employeeList = new List<EmployeeSimple>
+{
+    new EmployeeSimple("Ranjith", 60000),
+    new EmployeeSimple("Arun", 55000),
+    new EmployeeSimple("Meena", 70000)
+};
+
+var employeeSummary = employeeList.Select(e => new
+{
+    e.Name,
+    AnnualSalary = e.Salary * 12
+});
+
+foreach (var empl in employeeSummary)
+{
+    Console.WriteLine($"{empl.Name} - {empl.AnnualSalary}");
+}
+
+//Q4
+List<EmployeeBase> payrollEmployees = new List<EmployeeBase>
+{
+    new FullTimeEmployee("Ranjith", "IT", 60000),
+    new FullTimeEmployee("Arun", "IT", 55000),
+    new PartTimeEmployee("Meena", "HR", 80, 500),
+    new PartTimeEmployee("Priya", "HR", 60, 450),
+    new ContractEmployee("Vijay", "Finance", 70000),
+    new ContractEmployee("Suresh", "Finance", 65000)
+};
+
+Console.WriteLine("----- Employee Salaries -----");
+
+foreach (var emp2 in payrollEmployees)
+{
+    Console.WriteLine($"{emp2.Name} ({emp2.Department}) - Salary: {emp2.CalculateSalary()}");
+
+    if (emp2 is ITaxable taxable)
+    {
+        Console.WriteLine($"Tax: {taxable.CalculateTax()}");
+    }
+}
+
+Console.WriteLine();
+
+decimal totalPayroll = payrollEmployees.Sum(e => e.CalculateSalary());
+Console.WriteLine($"Total Payroll: {totalPayroll}");
+
+Console.WriteLine();
+
+Console.WriteLine("----- Payroll by Department -----");
+
+var payrollByDepartment = payrollEmployees
+    .GroupBy(e => e.Department)
+    .Select(g => new
+    {
+        Department = g.Key,
+        TotalSalary = g.Sum(x => x.CalculateSalary())
+    });
+
+foreach (var dept in payrollByDepartment)
+{
+    Console.WriteLine($"{dept.Department} - {dept.TotalSalary}");
+}
+
+//Q5
+Console.WriteLine("----- Notification Engine -----");
+
+NotificationService notificationService = new NotificationService();
+NotificationLogger notificationLogger = new NotificationLogger();
+
+notificationService.OnNotificationSent += notificationLogger.LogNotification;
+
+notificationService.Send("Welcome to C#", NotificationSenders.SendEmail);
+notificationService.Send("OTP: 123456", NotificationSenders.SendSms);
+notificationService.Send("Your report is ready", NotificationSenders.SendPush);
+
+List<BookLibrary> libraryBooks = new List<BookLibrary>
+{
+    new BookLibrary("Clean Code", "Robert C. Martin", "Programming", 2008, true),
+    new BookLibrary("The Pragmatic Programmer", "Andrew Hunt", "Programming", 1999, true),
+    new BookLibrary("C# in Depth", "Jon Skeet", "Programming", 2019, true),
+    new BookLibrary("Head First C#", "Andrew Stellman", "Programming", 2021, false),
+    new BookLibrary("Algorithms", "Robert Sedgewick", "Computer Science", 2011, true),
+    new BookLibrary("Design Patterns", "Erich Gamma", "Programming", 1994, false),
+    new BookLibrary("Refactoring", "Martin Fowler", "Programming", 2018, true),
+    new BookLibrary("The Hobbit", "J.R.R. Tolkien", "Fantasy", 1937, true),
+    new BookLibrary("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", 1954, false),
+    new BookLibrary("Harry Potter", "J.K. Rowling", "Fantasy", 1997, true),
+    new BookLibrary("The Alchemist", "Paulo Coelho", "Fiction", 1988, true),
+    new BookLibrary("Atomic Habits", "James Clear", "Self Help", 2018, true),
+    new BookLibrary("Deep Work", "Cal Newport", "Self Help", 2016, false),
+    new BookLibrary("Sapiens", "Yuval Noah Harari", "History", 2014, true),
+    new BookLibrary("Educated", "Tara Westover", "Biography", 2018, true)
+};
+
+Console.WriteLine("----- Available Books by J.R.R. Tolkien -----");
+
+var availableByAuthor = libraryBooks
+    .Where(b => b.Author == "J.R.R. Tolkien" && b.IsAvailable);
+
+foreach (var book in availableByAuthor)
+{
+    Console.WriteLine(book.Title);
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Books Grouped by Genre -----");
+
+var booksByGenre = libraryBooks
+    .GroupBy(b => b.Genre)
+    .Select(g => new
+    {
+        Genre = g.Key,
+        Count = g.Count()
+    });
+
+foreach (var genre in booksByGenre)
+{
+    Console.WriteLine($"{genre.Genre} - {genre.Count}");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("----- Oldest Book -----");
+
+var oldestBook = libraryBooks.OrderBy(b => b.Year).First();
+
+Console.WriteLine($"{oldestBook.Title} ({oldestBook.Year})");
+
+Console.WriteLine();
+
+Console.WriteLine("----- Books After 2010 (Sorted by Title) -----");
+
+var recentBooks = libraryBooks
+    .Where(b => b.Year > 2010)
+    .OrderBy(b => b.Title);
+
+foreach (var book in recentBooks)
+{
+    Console.WriteLine($"{book.Title} ({book.Year})");
+}
+
+>>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
 ModuleA.Helper.Greet();
 ModuleB.Helper.Greet();
 
@@ -379,3 +954,7 @@ public class SchoolDetails
     }
 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
