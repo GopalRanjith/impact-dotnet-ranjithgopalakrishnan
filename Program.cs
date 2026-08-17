@@ -5,14 +5,12 @@ using ModuleA;
 using ModuleB;
 using ECommerce;
 using CSharpLearning;
-<<<<<<< HEAD
-=======
 using Bank;
 using System.Collections.Generic;
 using System.Linq;
 using System;
->>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
-// See https://aka.ms/new-console-template for more information
+using System.Threading;
+using System.Threading.Tasks;
 Console.WriteLine("Hello, cohort!");
 
 //preprocessor 
@@ -359,8 +357,6 @@ SchoolManagement.Student.display();
 
 //resolved ambuguity error 
 
-<<<<<<< HEAD
-=======
 //encapsulation
 BankAccount account = new BankAccount();
 
@@ -925,8 +921,285 @@ foreach (var book in recentBooks)
 {
     Console.WriteLine($"{book.Title} ({book.Year})");
 }
+// week 3 day 1 
+Banks  b1 = new Banks(1000);
+try 
+{
+ b1.AmountWithdrawl(1400);
+ }
+ catch (InsufficientFundsException ex)
+ {
+  Console.WriteLine(ex.Message);
+  Console.WriteLine($"The balance need extra to withdraw  is {ex.deficitamount}");
+ }
+ finally 
+ {
+ Console.WriteLine ( "Process Completed");
+ }
 
->>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
+Exceptionhandling E = new Exceptionhandling();
+E.OrderOfExecution("3223");
+E.OrderOfExecution("8432943284898");
+
+//week 3 day 2 
+string path;
+using (TempFileManager te = new TempFileManager("hello , here is your content"))
+{
+    path = te.GetFilePath();
+    Console.WriteLine($"File exists inside using: {File.Exists(path)}");
+}
+Console.WriteLine($"File exists after using: {File.Exists(path)}");
+Console.WriteLine("After using block");
+
+await AsyncDemo.RunDemoAsync();
+List<Thread> threads = new List<Thread>();
+List<Task> tasks = new List<Task>();
+
+// 5 Threads
+for (int i = 1; i <= 5; i++)
+{
+    int threadNumber = i;
+
+    Thread thread = new Thread(() =>
+    {
+        ThreadSafeLogger.Instance.Log($"Thread {threadNumber}");
+    });
+
+    threads.Add(thread);
+    thread.Start();
+}
+
+// Wait for all threads
+foreach (Thread thread in threads)
+{
+    thread.Join();
+}
+
+// 5 Tasks
+for (int i = 1; i <= 5; i++)
+{
+    int taskNumber = i;
+
+    tasks.Add(Task.Run(() =>
+    {
+        ThreadSafeLogger.Instance.Log($"Task {taskNumber}");
+    }));
+}
+
+await Task.WhenAll(tasks);
+
+Console.WriteLine("Completed.");
+
+IFactoryVehicle factoryCar =
+    SimpleVehicleFactory.CreateVehicle("car");
+
+factoryCar.Drive();
+
+IFactoryVehicle factoryBike =
+    SimpleVehicleFactory.CreateVehicle("bike");
+
+factoryBike.Drive();
+
+IFactoryVehicle factoryTruck =
+    SimpleVehicleFactory.CreateVehicle("truck");
+
+factoryTruck.Drive();
+
+Console.WriteLine("\nFactory Method:");
+
+VehicleFactoryMethod carFactory =
+    new FactoryCarFactory();
+
+carFactory.StartVehicle();
+
+VehicleFactoryMethod bikeFactory =
+    new FactoryBikeFactory();
+
+bikeFactory.StartVehicle();
+
+VehicleFactoryMethod truckFactory =
+    new FactoryTruckFactory();
+
+truckFactory.StartVehicle();
+
+// ==========================================
+// Task 3.6 - Custom Observer
+// ==========================================
+
+StockTickerObserver observerTicker =
+    new StockTickerObserver();
+
+StockInvestor investor1 =
+    new StockInvestor("Investor 1");
+
+StockInvestor investor2 =
+    new StockInvestor("Investor 2");
+
+StockInvestor investor3 =
+    new StockInvestor("Investor 3");
+
+observerTicker.Subscribe(investor1);
+observerTicker.Subscribe(investor2);
+observerTicker.Subscribe(investor3);
+
+observerTicker.SetPrice("ABC", 150.50m);
+
+
+// ==========================================
+// Task 3.6 - C# Events
+// ==========================================
+
+StockTickerEvent eventTicker =
+    new StockTickerEvent();
+
+EventInvestor eventInvestor1 =
+    new EventInvestor("Investor 1");
+
+EventInvestor eventInvestor2 =
+    new EventInvestor("Investor 2");
+
+EventInvestor eventInvestor3 =
+    new EventInvestor("Investor 3");
+
+eventTicker.PriceChanged += eventInvestor1.OnPriceChanged;
+eventTicker.PriceChanged += eventInvestor2.OnPriceChanged;
+eventTicker.PriceChanged += eventInvestor3.OnPriceChanged;
+
+eventTicker.SetPrice("ABC", 155.75m);
+
+// ==========================================
+// Task 3.7 - Strategy Pattern
+// ==========================================
+
+ShoppingCart cart =
+    new ShoppingCart(new CreditCardPayment());
+
+cart.Checkout(1000m);
+
+// Change strategy at runtime
+cart.SetPaymentStrategy(new UpiPayment());
+
+cart.Checkout(1000m);
+
+// Change strategy again
+cart.SetPaymentStrategy(new NetBankingPayment());
+
+cart.Checkout(1000m);
+
+// ==========================================
+// Task 3.8 - Repository + Unit of Work
+// ==========================================
+
+IUnitOfWork unitOfWork = new UnitOfWork();
+
+unitOfWork.Students.Add(
+    new RepositoryStudent
+    {
+        Id = 1,
+        Name = "Ranjith"
+    });
+
+unitOfWork.Courses.Add(
+    new RepositoryCourse
+    {
+        Id = 1,
+        Name = "C#"
+    });
+
+Console.WriteLine(
+    $"Student: {unitOfWork.Students.GetById(1)?.Name}");
+
+Console.WriteLine(
+    $"Course: {unitOfWork.Courses.GetById(1)?.Name}");
+
+unitOfWork.Save();
+// =====================================================
+// Task 3.9 - Adapter
+// =====================================================
+
+string json = """
+{
+    "Id": 101,
+    "Product": "Laptop",
+    "Amount": 75000
+}
+""";
+
+IXmlReportGenerator xmlGenerator =
+    new ThirdPartyXmlReportGenerator();
+
+XmlReportAdapter adapter =
+    new XmlReportAdapter(xmlGenerator);
+
+adapter.GenerateFromJson(json);
+
+
+// =====================================================
+// Task 3.9 - Facade
+// =====================================================
+
+OrderFacade orderFacade =
+    new OrderFacade();
+
+orderFacade.PlaceOrder();
+
+await PerformanceComparison.Run();
+
+ReflectionDemo.Run();
+
+// ==========================================
+// Task 3.12 - Custom Attribute
+// ==========================================
+
+AttributeUser user = new AttributeUser
+{
+    Name = "RanjithGopalakrishnan",
+    Email = "ranjith@example.com"
+};
+
+AttributeValidator.Validate(user);
+
+// ==========================================
+// Task 3.13 - Interface vs Abstract
+// ==========================================
+
+IPrintable invoice = new PrintableInvoice();
+invoice.Print();
+
+IPrintable report = new PrintableReport();
+report.Print();
+
+OrderBase order = new OnlineOrder(5000m);
+order.DisplayAmount();
+order.ProcessOrder();
+
+
+// ==========================================
+// MathHelper - Static methods
+// ==========================================
+
+Console.WriteLine(
+    $"Factorial: {MathHelper.Factorial(5)}");
+
+Console.WriteLine(
+    $"Is 17 prime? {MathHelper.IsPrime(17)}");
+
+Console.WriteLine(
+    $"GCD of 48 and 18: {MathHelper.GCD(48, 18)}");
+
+
+// ==========================================
+// OrderProcessor - Instance methods
+// ==========================================
+
+OrderProcessor processor =
+    new OrderProcessor("Order Service");
+
+processor.ProcessOrder("ORD-101");
+processor.CancelOrder("ORD-102");
+
+EmployeeComparisonDemo.Run();
+
 ModuleA.Helper.Greet();
 ModuleB.Helper.Greet();
 
@@ -937,7 +1210,7 @@ public class SchoolDetails
 {
     public void Show()
     {
-        
+
         string studentName = "Ranjith";
         string teacherName = "Arun";
         int totalMarks = 95;
@@ -949,12 +1222,11 @@ public class SchoolDetails
         //using @class
         string @class = "10A";
 
-        
+
         System.Console.WriteLine(@class);
     }
-
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 1d90c1b (Complete Week 2 OOP, delegates, events, generics and LINQ assignments)
+
+
+
